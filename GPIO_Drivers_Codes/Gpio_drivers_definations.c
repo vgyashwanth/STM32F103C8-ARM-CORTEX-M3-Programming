@@ -1,6 +1,6 @@
 #include"Gpio_drivers.h"
 
-void GPIO_SET(uint8_t port,uint8_t pin_no, uint8_t dir,uint8_t fun){
+void GPIO_Configuration(uint8_t port,uint8_t pin_no, uint8_t dir,uint8_t fun){
 
 	// used for storing the target register address
 volatile uint32_t* t_reg;
@@ -18,17 +18,17 @@ volatile uint32_t* t_reg;
 	}
 //ENABLING THE BUS CLOCK
 		//acessing GPIOA
-		if(1==port){
-			RCC_APB2_ENR |=(1<<2);
+		if(PORTA==port){
+			RCC_APB2_ENR |=(1<<2); //enabling the clock to the corrsponding peripheral
 			t_reg = &GPIOA + offset; // GPIOA base address + offset*(sizeof(uint32_t)) and store back into t_reg
 		}
 		//acessing GPIOB
-		if(2==port){
+		if(PORTB==port){
 			RCC_APB2_ENR |=(1<<3);
 			t_reg = &GPIOB + offset;
 		}
 		//acessing GPIOC
-		if(3==port){
+		if(PORTC==port){
 			RCC_APB2_ENR |=(1<<4);
 			t_reg = &GPIOC + offset;
 		}
@@ -46,13 +46,13 @@ volatile uint32_t* t_reg;
 }
 
 void digitalWrite(uint8_t port, uint8_t pin, uint8_t logic_level){
-		uint8_t offset = 0x03; // 3*sizoef(uint32_t)==C our requried offset is C 
+		uint8_t offset = 0x03; // 3*sizoef(uint32_t)==C our requried offset is C to reach the register
 		volatile uint32_t * reg;
-		if(1==port)
+		if(PORTA==port)
 			reg = &GPIOA + offset;
-		if(2==port)
+		if(PORTB==port)
 			reg = &GPIOB + offset;
-		if(3==port)
+		if(PORTC==port)
 			reg = &GPIOC + offset;
 		// set the value in the register
 		if(logic_level)
@@ -64,14 +64,29 @@ void digitalWrite(uint8_t port, uint8_t pin, uint8_t logic_level){
 }
 uint8_t digitalRead(uint8_t port,uint8_t pin){
 	
-		uint8_t offset = 0x02; // 2*sizoef(uint32_t)==0x08 our requried offset is 0x08 
+		uint8_t offset = 0x02; // 2*sizoef(uint32_t)==0x08 our requried offset is 0x08 to reach the register
 		volatile uint32_t * reg;
-		if(1==port)
+		if(PORTA==port)
 			reg = &GPIOA + offset;
-		if(2==port)
+		if(PORTB==port)
 			reg = &GPIOB + offset;
-		if(3==port)
+		if(PORTC==port)
 			reg = &GPIOC + offset;
-		return ( ( (*reg)&(1<<pin) ) >> pin);
+		return ( ( (*reg)&(1U<<pin) ) >> pin);
+
+}
+void Toogle_Pin(uint8_t port, uint8_t pin){
+
+		uint8_t offset = 0x03; // 3*sizoef(uint32_t)==C our requried offset is C to reach the register
+		volatile uint32_t * reg;
+		if(PORTA==port)
+			reg = &GPIOA + offset;
+		if(PORTB==port)
+			reg = &GPIOB + offset;
+		if(PORTC==port)
+			reg = &GPIOC + offset;
+		// Toogle the value in the register
+		(*reg)^=(1<<pin);
+
 
 }
