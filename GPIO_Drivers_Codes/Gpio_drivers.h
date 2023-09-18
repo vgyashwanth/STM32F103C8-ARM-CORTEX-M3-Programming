@@ -30,9 +30,9 @@
 
 // FUNCTIONALITY OF THE PORT DURING OUTPUT TIME
 
-#define O_GEN_PU_PL 0
+#define O_GEN_PUS_PL 0
 #define O_GEN_OD    1
-#define O_ALT_PU_PL 2
+#define O_ALT_PUS_PL 2
 #define O_ALT_OD    3
 
 // LOGIC LEVELS
@@ -41,10 +41,19 @@
 #define LOW  0 
 
 // FUNCTION DECLARATIONS
-void GPIO_SET(uint8_t port,uint8_t pin_no, uint8_t dir,uint8_t fun);
+
+//used to configure the GPIO
+void GPIO_Configuration(uint8_t port,uint8_t pin_no, uint8_t dir,uint8_t fun);
+
+//used to write the logic levels to GPIO
 void digitalWrite(uint8_t port,uint8_t pin,uint8_t logic_level);
+
+//used to write the logic levels from GPIO
 uint8_t digitalRead(uint8_t port,uint8_t pin);
 
+// toggling the function
+
+void Toogle_Pin(uint8_t port, uint8_t pin);
 
 
 #endif
