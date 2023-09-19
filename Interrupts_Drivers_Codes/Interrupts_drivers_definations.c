@@ -195,6 +195,8 @@ void Enable_Interrupt(uint8_t pin,IRQn_Type IRQ_number){
 
 		//disable the max
 		EXTI_IMR |= (1<<pin);
+		__disable_irq();              // for safer side disabling the NVIC
 		NVIC_EnableIRQ(IRQ_number); // defination in core_cm3.h for enabling in NVIC Hardware
+	        __enable_irq();              //enabling the NVIC back
 
 }
