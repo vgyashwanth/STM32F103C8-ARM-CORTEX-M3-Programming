@@ -4,6 +4,53 @@
 //FOR ENABILING THE CLOCK TO THE BUS
 #define RCC_APB2_ENR (*((volatile uint32_t * )(0x40021000+0x18)))
 
+<<<<<<< HEAD
+// BASE ADDRESS OF THE PORTS
+#define GPIOA  (*((volatile uint32_t * )(0x40010800)))
+#define GPIOB  (*((volatile uint32_t * )(0x40010C00)))
+#define GPIOC  (*((volatile uint32_t * )(0x40011000)))
+
+//USER DEFINED PORT NAMES
+
+#define PORTA 1
+#define PORTB 2
+#define PORTC 3
+
+//INPUT AND OUTPUT MODES
+
+#define INPUT 0
+#define OUT10 1
+#define OUT2  2
+#define OUT50 3
+
+// FUNCTIONALITY OF THE PORT DURING INPUT TIME
+
+#define I_ANALOG 0
+#define I_FLOAT  1
+#define I_PU_PD  2
+
+// FUNCTIONALITY OF THE PORT DURING OUTPUT TIME
+
+#define O_GEN_PU_PL 0
+#define O_GEN_OD    1
+#define O_ALT_PU_PL 2
+#define O_ALT_OD    3
+
+// LOGIC LEVELS
+
+#define HIGH 1
+#define LOW  0 
+
+// FUNCTION DECLARATIONS
+void GPIO_SET(uint8_t port,uint8_t pin_no, uint8_t dir,uint8_t fun);
+void digitalWrite(uint8_t port,uint8_t pin,uint8_t logic_level);
+uint8_t digitalRead(uint8_t port,uint8_t pin);
+
+
+
+#endif
+
+=======
 // BASE ADDRESS OF THE PORTS
 #define GPIOA  (*((volatile uint32_t * )(0x40010800)))
 #define GPIOB  (*((volatile uint32_t * )(0x40010C00)))
@@ -57,3 +104,5 @@ void Toogle_Pin(uint8_t port, uint8_t pin);
 
 
 #endif
+
+>>>>>>> f4ef5e6ecfed3b2709a33a363aff1104f16ec987
